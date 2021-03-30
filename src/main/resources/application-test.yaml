@@ -1,0 +1,43 @@
+server:
+  port: 1979
+
+app.augen:
+  baseCurrency: NZD
+
+spring.cloud.stream:
+  #Producer
+  function:
+      definition: spotPriceProducer;profitFactorProducer;doMarketProcessor;marketUpdateConsumer
+  bindings:
+    spotPriceProducer-out-0:
+      destination: market-producer-topic
+    profitFactorProducer-out-0:
+      destination: market-producer-topic
+    doMarketProcessor-in-0:
+      destination: market-producer-topic
+    doMarketProcessor-out-0:
+      destination: market-processor-topic
+    marketUpdateConsumer-in-0:
+      destination: market-processor-topic
+
+  #Common
+  kafka:
+    bindings:
+      brokers:
+        - localhost:9092
+    streams:
+      binder:
+        configuration:
+          commit:
+            interval.ms: 1000
+
+com.coinbase:
+  url: "https://api.coinbase.com/v2"
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 30000
+        readTimeout: 30000
+        loggerLevel: basic
