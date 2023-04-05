@@ -8,7 +8,7 @@ env:
 
 jobs:
   TestWorkflowJob:
-    runs-on: [ self-hosted, on-prem ]
+    runs-on: ubuntu-latest
     steps:
       - name: Debug the folder
         run: |
