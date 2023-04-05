@@ -14,6 +14,6 @@ jobs:
         run: |
           ls -al
       - name: Echo command
-        if: !command -V sshpass
+        if: '!command -v sshpass'
         run: |
           echo 'Test Echo'
